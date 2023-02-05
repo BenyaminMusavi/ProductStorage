@@ -19,12 +19,11 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+	<ItemGroup>
+		<Reference Include="Contracts">
+			<HintPath>..\..\ClientApi\Contracts\bin\Debug\net6.0\Contracts.dll</HintPath>
+		</Reference>
+	</ItemGroup>
 
-
-  <ItemGroup>
-    <Reference Include="Contracts">
-      <HintPath>..\..\..\ClientApi\ClientApi\Contracts\bin\Debug\net6.0\Contracts.dll</HintPath>
-    </Reference>
-  </ItemGroup>
 
 </Project>

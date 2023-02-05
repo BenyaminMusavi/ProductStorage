@@ -3,30 +3,33 @@ using MassTransit;
 
 namespace ProductStorage.Consumer
 {
-    public class SaveDbConsumer : IConsumer<Product>
+    public class SaveDbConsumer : IConsumer<ProductRequest>
     {
-        private readonly List<Product> _products = new List<Product>();
-        public async Task Consume(ConsumeContext<Product> context)
+        private readonly List<ProductRequest> _products = new List<ProductRequest>();
+        public async Task Consume(ConsumeContext<ProductRequest> context)
         {
-            await Task.Delay(5000).ContinueWith(task =>
-               _products.Add(new Product
-               {
-                   Id = context.Message.Id,
-                   Amount = context.Message.Amount,
-                   DateTime = context.Message.DateTime,
-                   ProductName = context.Message.ProductName,
-               })
-            );
+            //await Task.Delay(5000).ContinueWith(task =>
+            //   _products.Add(new Product
+            //   {
+            //       Id = context.Message.Id,
+            //       Amount = context.Message.Amount,
+            //       DateTime = context.Message.DateTime,
+            //       ProductName = context.Message.ProductName,
+            //   })
+            //);
+            _products.Add(new ProductRequest
+            {
+                Id = context.Message.Id,
+                Amount = context.Message.Amount,
+                DateTime = context.Message.DateTime,
+                ProductName = context.Message.ProductName,
+            });
 
             Console.WriteLine($"insert db {context.Message.Id}");
 
-            await context.RespondAsync(new ResponseMessage { MessageName = "Successed" });
+            await context.RespondAsync<ResponseMessage>(new { MessageName = "Successed" });
 
-            //if (_products.Count == 50)
-            //{
-            //    var message = _products;
-
-            //}
+          
             //   return Task.CompletedTask;
         }
     }
