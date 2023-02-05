@@ -15,17 +15,30 @@ Console.WriteLine("Product Storage");
 
 builder.Services.AddMassTransit(x =>
 {
+
     x.AddConsumer<SaveDbConsumer>();
     x.SetKebabCaseEndpointNameFormatter();
     x.UsingRabbitMq((context, cfg) =>
     {
+        //cfg.ReceiveEndpoint(e =>
+        //{
+        //    e.Consumer<SaveDbConsumer>("",cc =>
+        //    {
+        //        cc.UseConcurrencyLimit(1);
+        //    });
+        //});
+        //cfg.ReceiveEndpoint(c =>
+        //{
+        //    c.ConcurrentMessageLimit = 1;
+        //});
+        cfg.UseConcurrencyLimit(1);
         //cfg.Host(builder.Configuration.GetValue<string>("RabbitConnection"));
         cfg.Host(new Uri("rabbitmq://localhost/"), hst =>
         {
             hst.Username(Constants.UserName);
             hst.Password(Constants.Password);
         });
-     
+
         cfg.ConfigureEndpoints(context);
         cfg.PrefetchCount = 16;
         //cfg.ReceiveEndpoint(Constants.SendServiceQueue, e =>
