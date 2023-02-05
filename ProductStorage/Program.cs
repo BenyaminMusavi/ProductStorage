@@ -15,12 +15,7 @@ Console.WriteLine("Product Storage");
 
 builder.Services.AddMassTransit(x =>
 {
-    //x.AddConsumer(typeof(SaveDbConsumer));
-  //  x.AddConsumer<SaveDbConsumer>();
-    x.AddConsumer<SaveDbConsumer>().Endpoint(e =>
-    {
-        //e.Temporary = false;
-    });
+    x.AddConsumer<SaveDbConsumer>();
     x.SetKebabCaseEndpointNameFormatter();
     x.UsingRabbitMq((context, cfg) =>
     {
@@ -39,8 +34,6 @@ builder.Services.AddMassTransit(x =>
         //    e.PrefetchCount = 16;
         //});
     });
-    //x.AddRequestClient<Product>();
-    x.AddRequestClient<ResponseMessage>();
 });
 
 
